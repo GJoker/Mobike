@@ -83,14 +83,20 @@ test = pd.read_csv('./data/test.csv')
 # test = train.groupby(['starttime'], as_index=False)['starttime'].agg({'count':'count'})
 # train1 = train[(train['starttime'] < '2017-05-23 00:00:00')]
 # train2 = train[(train['starttime'] >= '2017-05-23 00:00:00')]
-#
+# #
 user_count = train.groupby('userid', as_index=False)['geohashed_start_loc'].agg({'user_count': 'count'})
-print train[(train['userid'] == 2730)].groupby('geohashed_start_loc', as_index=False)['geohashed_start_loc'].agg({'number': 'count'})
+# print train[(train['userid'] == 2730)].groupby('geohashed_start_loc', as_index=False)['geohashed_start_loc'].agg({'number': 'count'})
 # test_csv = train[(train['userid'] == 2730)].groupby(['geohashed_start_loc', 'geohashed_end_loc'], as_index=False)['geohashed_end_loc'].agg({'number': 'count'})
 # test_csv.to_csv('test.csv')
-# count = user_count.groupby('user_count', as_index=False)['user_count'].agg({'count': 'count'})
-# insertRow = pd.DataFrame([[0, 0]], columns=['user_count', 'count'])
-# count = pd.concat([insertRow, count], ignore_index=True)
+count = user_count.groupby('user_count', as_index=False)['user_count'].agg({'count': 'count'})
+insertRow = pd.DataFrame([[0, 0]], columns=['user_count', 'count'])
+count = pd.concat([insertRow, count], ignore_index=True)
+sumAll = count['count'].sum()
+result = count['count']/sumAll
+print result
+result = result.cumsum()
+result.plot()
+plt.show()
 # sumAll = count['count'].sum()
 #
 # xaxis = list(count['user_count'])
@@ -116,7 +122,7 @@ print train[(train['userid'] == 2730)].groupby('geohashed_start_loc', as_index=F
 # print result['label'].sum()
 # print result.shape[0]
 # print result
-print Geohash.decode_exactly('wx4gn2s')
+# print Geohash.decode_exactly('wx4gn2s')
 # 湖南岳阳 山东烟台 湖北鄂州 江西南昌 山西临汾 山东济南 天津 广西南宁 陕西西安 河北保定 宁夏银川 广东惠州 广东广州 广东揭阳 福建揭阳 河北唐山 四川绵阳 广东湛江 江苏南京 江苏无锡 河南郑州 上海 河北邢台
 # 安徽合肥 云南红河 云南玉溪 浙江杭州 北京 湖南株洲 四川成都 四川资阳 福建福州 福建宁德
 # for loc in locs:
